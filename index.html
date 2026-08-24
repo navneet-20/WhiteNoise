@@ -2,162 +2,65 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#07111f">
 <title>Deep Sleep — Ambient Sound Mixer</title>
 <style>
-:root{--bg:#07111f;--panel:rgba(14,28,47,.78);--line:rgba(255,255,255,.09);--text:#edf6ff;--muted:#91a5bb;--accent:#78c7ff}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:radial-gradient(circle at 50% -10%,#173451 0,#0b1b2d 34%,#07111f 70%);background-attachment:fixed}
-body{padding:24px 16px 48px}.wrap{max-width:1120px;margin:auto}
-header{text-align:center;padding:26px 0 22px}.moon{font-size:42px;filter:drop-shadow(0 0 18px #79b9ff55)}
-h1{font-size:clamp(32px,6vw,56px);margin:8px 0 8px;letter-spacing:-1.8px}.sub{color:var(--muted);font-size:16px;margin:0 auto;max-width:600px}
+:root{--bg:#07111f;--panel:rgba(14,28,47,.82);--line:rgba(255,255,255,.09);--text:#edf6ff;--muted:#91a5bb;--accent:#78c7ff}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--text);background:radial-gradient(circle at 50% -10%,#173451 0,#0b1b2d 34%,#07111f 70%);background-attachment:fixed}
+body{padding:24px 16px 48px}.wrap{max-width:1120px;margin:auto}header{text-align:center;padding:26px 0 22px}.moon{font-size:42px}h1{font-size:clamp(32px,6vw,56px);margin:8px 0;letter-spacing:-1.8px}.sub{color:var(--muted);font-size:16px;margin:auto;max-width:600px}
 .panel{background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(18px);border-radius:24px;box-shadow:0 20px 70px #0005}
-.controls{display:flex;gap:12px;align-items:center;justify-content:center;padding:18px;flex-wrap:wrap}
-button,select{border:1px solid var(--line);background:#10233a;color:var(--text);border-radius:14px;padding:11px 16px;font-weight:700;cursor:pointer}
-button:hover{background:#17324f}.primary{background:linear-gradient(135deg,#66bfff,#4c8fff);border:0;color:#06111e}.primary:hover{filter:brightness(1.08)}
+.controls{display:flex;gap:12px;align-items:center;justify-content:center;padding:18px;flex-wrap:wrap}button,select{border:1px solid var(--line);background:#10233a;color:var(--text);border-radius:14px;padding:11px 16px;font-weight:700;cursor:pointer}.primary{background:linear-gradient(135deg,#66bfff,#4c8fff);border:0;color:#06111e}
 .status{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}.dot{width:8px;height:8px;border-radius:50%;background:#60758b}.dot.on{background:#65e6a0;box-shadow:0 0 12px #65e6a0}
-.master{padding:18px 22px;margin-top:14px}.master-row{display:flex;align-items:center;gap:16px}.master-row strong{min-width:120px}.master-row span{color:var(--accent);min-width:45px;text-align:right}
-input[type=range]{width:100%;accent-color:var(--accent);cursor:pointer}
-.timer{display:flex;align-items:center;gap:10px;justify-content:center;padding:18px}.timer strong{font-variant-numeric:tabular-nums;min-width:72px;text-align:center}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}
-.card{padding:18px;position:relative;overflow:hidden;transition:.2s;border:1px solid var(--line)}.card.active{border-color:#69bfff88;box-shadow:0 0 0 1px #69bfff22,0 18px 45px #0003}
-.card.active:before{content:"";position:absolute;inset:-60px auto auto -60px;width:150px;height:150px;background:#68bfff20;border-radius:50%;filter:blur(20px)}
-.cardtop{display:flex;align-items:center;gap:12px}.icon{font-size:32px}.name{font-size:18px;font-weight:800}.desc{font-size:12px;color:var(--muted);margin:5px 0 15px}.row{display:flex;align-items:center;gap:10px}.play{width:46px;height:46px;border-radius:50%;padding:0;font-size:19px;flex:0 0 auto}.card.active .play{background:#4c9fff;color:white}
-.vol{font-size:12px;color:var(--muted);margin-left:auto}.footer{text-align:center;color:#60758b;font-size:12px;margin-top:28px}
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:#10243a;border:1px solid var(--line);padding:11px 15px;border-radius:12px;transition:.25s;pointer-events:none;z-index:5}.toast.show{opacity:1;transform:translate(-50%,0)}
+.master{padding:18px 22px;margin-top:14px}.master-row{display:flex;align-items:center;gap:16px}.master-row strong{min-width:120px}.master-row span{color:var(--accent);min-width:45px;text-align:right}input[type=range]{width:100%;accent-color:var(--accent)}
+.timer{display:flex;align-items:center;gap:10px;justify-content:center;padding:18px;margin-top:14px}.timer strong{font-variant-numeric:tabular-nums;min-width:72px;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}.card{padding:18px;position:relative;overflow:hidden;transition:.2s}.card.active{border-color:#69bfff88;box-shadow:0 0 0 1px #69bfff22,0 18px 45px #0003}
+.cardtop{display:flex;align-items:center;gap:12px}.icon{font-size:32px}.name{font-size:18px;font-weight:800}.desc{font-size:12px;color:var(--muted);margin:5px 0 15px}.row{display:flex;align-items:center;gap:10px}.play{width:46px;height:46px;border-radius:50%;padding:0;font-size:19px;flex:0 0 auto}.card.active .play{background:#4c9fff;color:white}.vol{font-size:12px;color:var(--muted);min-width:42px;text-align:right}.range{flex:1}
+.footer,.hint{text-align:center;color:#60758b;font-size:12px;margin-top:28px}.hint{margin:16px auto 0;color:var(--muted);font-size:13px}.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:#10243a;border:1px solid var(--line);padding:11px 15px;border-radius:12px;transition:.25s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}
 @media(max-width:560px){body{padding:12px}.grid{grid-template-columns:1fr 1fr}.card{padding:14px}.desc{display:none}.master-row strong{min-width:90px}.timer{flex-wrap:wrap}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header><div class="moon">🌙</div><h1>Deep Sleep</h1><p class="sub">A calm, private ambient mixer for sleep, focus and relaxation.</p></header>
-
+<header><div class="moon">🌙</div><h1>Deep Sleep</h1><p class="sub">A calm ambient mixer for sleep, focus and relaxation.</p></header>
 <section class="panel controls">
-  <button id="mainBtn" class="primary">▶ Start Audio</button>
-  <button id="stopBtn">■ Stop All</button>
-  <button id="saveBtn">♡ Save Mix</button>
-  <div class="status"><i id="dot" class="dot"></i><span id="status">Audio ready</span></div>
+<button id="mainBtn" class="primary">▶ Start Audio</button><button id="stopBtn">■ Stop All</button><button id="saveBtn">♡ Save Mix</button>
+<div class="status"><i id="dot" class="dot"></i><span id="status">Audio ready</span></div>
 </section>
-
-<section class="panel master">
-  <div class="master-row"><strong>Master volume</strong><input id="master" type="range" min="0" max="100" value="70"><span id="masterVal">70%</span></div>
-</section>
-
-<section class="panel timer">
-  <span>⏱ Sleep timer</span>
-  <select id="timerSelect">
-    <option value="0">Off</option><option value="15">15 min</option><option value="30">30 min</option>
-    <option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option>
-  </select>
-  <strong id="countdown">—</strong>
-</section>
-
-<div id="grid" class="grid"></div>
-<div class="footer">Audio is generated locally in your browser — no account, backend or audio files required.</div>
-</div>
-<div id="toast" class="toast"></div>
-
+<section class="panel master"><div class="master-row"><strong>Master volume</strong><input id="master" type="range" min="0" max="100" value="70"><span id="masterVal">70%</span></div></section>
+<section class="panel timer"><span>⏱ Sleep timer</span><select id="timerSelect"><option value="0">Off</option><option value="15">15 min</option><option value="30">30 min</option><option value="45">45 min</option><option value="60">60 min</option><option value="90">90 min</option></select><strong id="countdown">—</strong></section>
+<p class="hint">Add your high-quality audio files to <b>assets/</b>. Edit filenames in the configuration below if needed.</p>
+<div id="grid" class="grid"></div><div class="footer">Audio is loaded directly from your GitHub Pages assets folder.</div>
+</div><div id="toast" class="toast"></div>
 <script>
-(() => {
-"use strict";
 const sounds=[
- ["rain","🌧️","Steady rain","Soft broadband rain"],
- ["ocean","🌊","Ocean waves","Slow rolling surf"],
- ["wind","🌬️","Wind","Deep gentle airflow"],
- ["fire","🔥","Fireplace","Warm crackling ambience"],
- ["thunder","⛈️","Distant thunder","Low occasional rumbles"],
- ["forest","🌲","Forest night","Leaves and distant birds"],
- ["fan","🌀","Fan","Consistent cooling hum"],
- ["brown","〰️","Brown noise","Deep, smooth noise"],
- ["pink","〰️","Pink noise","Balanced soft noise"],
- ["night","🦗","Night crickets","Gentle nighttime texture"],
- ["train","🚆","Night train","Low rolling journey"],
- ["cafe","☕","Quiet café","Soft room ambience"]
-];
-const grid=document.getElementById("grid"), mainBtn=document.getElementById("mainBtn"), stopBtn=document.getElementById("stopBtn");
-const master=document.getElementById("master"), masterVal=document.getElementById("masterVal"), dot=document.getElementById("dot"), status=document.getElementById("status");
-let ctx=null, masterGain=null, timer=null, timerEnd=0, running=false, saved=JSON.parse(localStorage.getItem("deepSleepMix")||"{}");
-const nodes={};
+{id:"rain",icon:"🌧️",name:"Rain",desc:"Soft steady rainfall",file:"assets/rain.mp3"},
+{id:"ocean",icon:"🌊",name:"Ocean Waves",desc:"Slow rolling waves",file:"assets/ocean.mp3"},
+{id:"wind",icon:"🌬️",name:"Wind",desc:"Gentle flowing wind",file:"assets/wind.mp3"},
+{id:"fire",icon:"🔥",name:"Fireplace",desc:"Warm crackling fire",file:"assets/fire.mp3"},
+{id:"thunder",icon:"⛈️",name:"Thunderstorm",desc:"Rain and distant thunder",file:"assets/thunder.mp3"},
+{id:"forest",icon:"🌲",name:"Forest",desc:"Peaceful forest ambience",file:"assets/forest.mp3"},
+{id:"fan",icon:"🌀",name:"Fan",desc:"Consistent fan noise",file:"assets/fan.mp3"},
+{id:"brown",icon:"〰️",name:"Brown Noise",desc:"Deep background noise",file:"assets/brown-noise.mp3"},
+{id:"pink",icon:"〰️",name:"Pink Noise",desc:"Balanced background noise",file:"assets/pink-noise.mp3"},
+{id:"night",icon:"🦗",name:"Night",desc:"Quiet nighttime ambience",file:"assets/night.mp3"},
+{id:"train",icon:"🚆",name:"Night Train",desc:"Low rolling train ambience",file:"assets/train.mp3"},
+{id:"cafe",icon:"☕",name:"Café",desc:"Quiet café ambience",file:"assets/cafe.mp3"}];
 
-function db(v){return v<=0?-60:20*Math.log10(v/100)}
-function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1800)}
-function ensure(){
- if(ctx) { if(ctx.state==="suspended") ctx.resume(); return; }
- ctx=new (window.AudioContext||window.webkitAudioContext)();
- masterGain=ctx.createGain(); masterGain.gain.value=master.value/100; masterGain.connect(ctx.destination);
-}
-
-function noiseBuffer(kind="white"){
- const len=ctx.sampleRate*2, b=ctx.createBuffer(1,len,ctx.sampleRate), d=b.getChannelData(0);
- let last=0;
- for(let i=0;i<len;i++){
-   const w=Math.random()*2-1;
-   if(kind==="brown"){last=(last+0.02*w); d[i]=Math.max(-1,Math.min(1,last*3))}
-   else if(kind==="pink"){last=.985*last+.015*w; d[i]=last*3}
-   else d[i]=w;
- }
- return b;
-}
-function sourceNoise(kind="white"){const s=ctx.createBufferSource();s.buffer=noiseBuffer(kind);s.loop=true;return s}
-function gainNode(v=0){const g=ctx.createGain();g.gain.value=v;g.connect(masterGain);return g}
-function osc(type,freq,vol){const o=ctx.createOscillator(),g=gainNode(vol);o.type=type;o.frequency.value=freq;o.connect(g);o.start();return {o,g}}
-function addNoise(type,filterFreq,vol){
- const s=sourceNoise(type), f=ctx.createBiquadFilter(),g=gainNode(vol);f.type="lowpass";f.frequency.value=filterFreq;s.connect(f);f.connect(g);s.start();return {s,f,g}
-}
-function make(id){
- const out={parts:[],stop(){this.parts.forEach(x=>{try{x.s?.stop();x.o?.stop()}catch(e){}});this.parts=[]}};
- if(id==="rain"){out.parts.push(addNoise("white",8500,.30));}
- if(id==="ocean"){const n=addNoise("brown",1300,.34);const l=ctx.createOscillator(),lg=ctx.createGain();l.frequency.value=.075;lg.gain.value=.20;l.connect(lg);lg.connect(n.g.gain);l.start();out.parts.push(n,{o:l})}
- if(id==="wind"){out.parts.push(addNoise("brown",900,.24),addNoise("white",1800,.08))}
- if(id==="fire"){out.parts.push(addNoise("white",4200,.13));for(let i=0;i<5;i++){const x=osc("triangle",70+i*13,.012);out.parts.push(x)}}
- if(id==="thunder"){out.parts.push(addNoise("brown",180,.20));out.parts.forEach(()=>{});setInterval(()=>{},0)}
- if(id==="forest"){out.parts.push(addNoise("pink",3000,.09));const x=osc("sine",1800,.006);out.parts.push(x)}
- if(id==="fan"){const x=addNoise("white",1100,.20);out.parts.push(x);out.parts.push(osc("sine",95,.035))}
- if(id==="brown"){out.parts.push(addNoise("brown",800,.32))}
- if(id==="pink"){out.parts.push(addNoise("pink",7000,.25))}
- if(id==="night"){out.parts.push(addNoise("pink",4200,.06));for(let i=0;i<3;i++){const x=osc("sine",2800+i*370,.004);out.parts.push(x)}}
- if(id==="train"){out.parts.push(addNoise("brown",380,.16),osc("sine",52,.045),osc("sine",104,.018))}
- if(id==="cafe"){out.parts.push(addNoise("pink",3500,.09),addNoise("brown",220,.035))}
- return out;
-}
-function start(id){
- ensure(); if(nodes[id]) return;
- const v=saved[id]?.volume ?? 55, card=document.querySelector(`[data-id="${id}"]`), slider=card.querySelector("input");
- slider.value=v; nodes[id]=make(id); nodes[id].gain=card.querySelector(".vol");
- card.classList.add("active");card.querySelector(".play").textContent="⏸";saveLocal();updateStatus();
-}
-function stop(id){
- if(!nodes[id])return; nodes[id].stop();delete nodes[id];
- const card=document.querySelector(`[data-id="${id}"]`);card.classList.remove("active");card.querySelector(".play").textContent="▶";updateStatus();
-}
-function setVol(id,v){saved[id]=saved[id]||{};saved[id].volume=+v;localStorage.setItem("deepSleepMix",JSON.stringify(saved))}
-function updateStatus(){const n=Object.keys(nodes).length;running=n>0;dot.classList.toggle("on",n>0);status.textContent=n?`${n} sound${n>1?"s":""} playing`:"Audio ready";mainBtn.textContent=n?"⏸ Pause All":"▶ Start Audio"}
-function saveLocal(){localStorage.setItem("deepSleepMix",JSON.stringify(saved))}
-function stopAll(){Object.keys(nodes).forEach(stop);if(timer){clearInterval(timer);timer=null}document.getElementById("countdown").textContent="—";updateStatus()}
-function pauseAll(){Object.keys(nodes).forEach(id=>stop(id))}
-function resumeSaved(){sounds.forEach(([id])=>{if(saved[id]?.on)start(id)})}
-
-sounds.forEach(([id,icon,name,desc])=>{
- const c=document.createElement("section");c.className="panel card";c.dataset.id=id;
- c.innerHTML=`<div class="cardtop"><span class="icon">${icon}</span><div><div class="name">${name}</div><div class="desc">${desc}</div></div></div><div class="row"><button class="play" aria-label="Play ${name}">▶</button><input class="range" type="range" min="0" max="100" value="${saved[id]?.volume??55}" aria-label="${name} volume"><span class="vol">${saved[id]?.volume??55}%</span></div>`;
- const p=c.querySelector(".play"), r=c.querySelector(".range"), v=c.querySelector(".vol");
- p.onclick=()=>nodes[id]?stop(id):start(id);
- r.oninput=e=>{v.textContent=e.target.value+"%";setVol(id,e.target.value);if(nodes[id]){const g=nodes[id].parts.find(x=>x.g)?.g;if(g)g.gain.value=e.target.value/100*.25}};
- grid.appendChild(c);
-});
-
-mainBtn.onclick=()=>{ensure();Object.keys(nodes).length?pauseAll():sounds.slice(0,3).forEach(([id])=>start(id))};
-stopBtn.onclick=stopAll;
-master.oninput=()=>{masterVal.textContent=master.value+"%";if(masterGain)masterGain.gain.value=master.value/100};
-document.getElementById("saveBtn").onclick=()=>{sounds.forEach(([id])=>{saved[id]=saved[id]||{};saved[id].on=!!nodes[id]});saveLocal();toast("Mix saved on this device");};
-document.getElementById("timerSelect").onchange=e=>{
- if(timer){clearInterval(timer);timer=null}
- const mins=+e.target.value;if(!mins){document.getElementById("countdown").textContent="—";return}
- timerEnd=Date.now()+mins*60000;
- timer=setInterval(()=>{const left=Math.max(0,timerEnd-Date.now());document.getElementById("countdown").textContent=Math.ceil(left/60000)+"m";if(!left){clearInterval(timer);timer=null;stopAll();toast("Sleep timer finished");}},1000);
-};
-window.addEventListener("pagehide",()=>{});
-})();
+const grid=document.getElementById("grid"),players={},saved=JSON.parse(localStorage.getItem("deepSleepMix")||"{}");
+let ctx=null,masterGain=null,timer=null,timerEnd=0;
+function toast(t){let x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1800)}
+function ensure(){if(!ctx){ctx=new(window.AudioContext||window.webkitAudioContext)();masterGain=ctx.createGain();masterGain.gain.value=document.getElementById("master").value/100;masterGain.connect(ctx.destination)}if(ctx.state==="suspended")ctx.resume()}
+function update(){let n=Object.keys(players).length;document.getElementById("dot").classList.toggle("on",n>0);document.getElementById("status").textContent=n?`${n} sound${n>1?"s":""} playing`:"Audio ready";document.getElementById("mainBtn").textContent=n?"⏸ Pause All":"▶ Start Audio"}
+function stop(id){let p=players[id];if(!p)return;p.audio.pause();p.audio.currentTime=0;p.source?.disconnect();p.gain.disconnect();delete players[id];let c=document.querySelector(`[data-id="${id}"]`);c.classList.remove("active");c.querySelector(".play").textContent="▶";update()}
+function start(s){ensure();if(players[s.id])return;let c=document.querySelector(`[data-id="${s.id}"]`),v=+c.querySelector(".range").value/100,a=new Audio(s.file);a.loop=true;a.preload="auto";let source=ctx.createMediaElementSource(a),gain=ctx.createGain();gain.gain.value=v;source.connect(gain);gain.connect(masterGain);players[s.id]={audio:a,source,gain};a.onerror=()=>{stop(s.id);toast("File not found: "+s.file)};a.play().then(()=>{c.classList.add("active");c.querySelector(".play").textContent="⏸";update()}).catch(()=>{delete players[s.id];toast("Add "+s.file+" to assets/")})}
+function stopAll(){Object.keys(players).forEach(stop);if(timer){clearInterval(timer);timer=null}document.getElementById("countdown").textContent="—"}
+sounds.forEach(s=>{let c=document.createElement("section");c.className="panel card";c.dataset.id=s.id;let v=saved[s.id]?.volume??70;c.innerHTML=`<div class="cardtop"><span class="icon">${s.icon}</span><div><div class="name">${s.name}</div><div class="desc">${s.desc}</div></div></div><div class="row"><button class="play">▶</button><input class="range" type="range" min="0" max="100" value="${v}"><span class="vol">${v}%</span></div>`;let r=c.querySelector(".range");r.oninput=()=>{c.querySelector(".vol").textContent=r.value+"%";saved[s.id]={volume:+r.value};localStorage.setItem("deepSleepMix",JSON.stringify(saved));if(players[s.id])players[s.id].gain.gain.value=r.value/100};c.querySelector(".play").onclick=()=>players[s.id]?stop(s.id):start(s);grid.appendChild(c)});
+document.getElementById("mainBtn").onclick=()=>{ensure();if(Object.keys(players).length)stopAll();else start(sounds[0])};
+document.getElementById("stopBtn").onclick=stopAll;
+document.getElementById("saveBtn").onclick=()=>{sounds.forEach(s=>{let c=document.querySelector(`[data-id="${s.id}"]`);saved[s.id]={volume:+c.querySelector(".range").value,on:!!players[s.id]}});localStorage.setItem("deepSleepMix",JSON.stringify(saved));toast("Mix saved on this device")};
+document.getElementById("master").oninput=e=>{document.getElementById("masterVal").textContent=e.target.value+"%";if(masterGain)masterGain.gain.value=e.target.value/100};
+document.getElementById("timerSelect").onchange=e=>{if(timer)clearInterval(timer);let m=+e.target.value;if(!m){document.getElementById("countdown").textContent="—";return}timerEnd=Date.now()+m*60000;timer=setInterval(()=>{let left=Math.max(0,timerEnd-Date.now()),sec=Math.ceil(left/1000),mm=Math.floor(sec/60),ss=String(sec%60).padStart(2,"0");document.getElementById("countdown").textContent=`${mm}:${ss}`;if(!left){clearInterval(timer);timer=null;stopAll();toast("Sleep timer finished")}},250)};
 </script>
 </body>
 </html>

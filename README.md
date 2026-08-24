@@ -1,25 +1,25 @@
-# Deep Sleep — Ambient Sound Mixer
+# Deep Sleep — High Quality Asset Audio Version
 
-A rebuilt version of navneet-20/sleep designed for GitHub Pages.
+The generated sounds have been removed completely. This version plays your own audio files from `assets/`.
 
-## Why this rebuild
-The original project loads Tone.js and expects MP3 files in `assets/`. The UI also contains legacy Firebase boilerplate. The new version removes those runtime dependencies and uses the browser Web Audio API to generate the ambient layers locally.
+## Expected structure
 
-## Features
-- Reliable Start Audio flow for browser autoplay restrictions
-- 12 ambient sound layers
-- Individual volume controls
-- Master volume
-- Play/pause and Stop All
-- Sleep timer
-- LocalStorage mix persistence
-- Mobile responsive
-- No backend
-- No external audio files
-- Works as a static GitHub Pages site
+sleep/
+- index.html
+- assets/
+  - rain.mp3
+  - ocean.mp3
+  - wind.mp3
+  - fire.mp3
+  - thunder.mp3
+  - forest.mp3
+  - fan.mp3
+  - brown-noise.mp3
+  - pink-noise.mp3
+  - night.mp3
+  - train.mp3
+  - cafe.mp3
 
-## Deploy
-Replace the contents of the repository with `index.html` and push to the `main` branch. GitHub Pages can then serve the repository root.
+If your filenames differ, edit the `file:` values near the top of `index.html`.
 
-## Important
-Generated ambience is intentionally lightweight and loop-free. For higher-fidelity recordings such as realistic rain, waves, or fireplace audio, royalty-free audio assets can be added later without changing the UI architecture.
+The files loop automatically and are mixed through the browser Web Audio API. Use MP3/WAV files for best results. GitHub Pages paths are case-sensitive.
